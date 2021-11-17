@@ -1,5 +1,4 @@
 import throttle from 'lodash.throttle';
-
 const STORAGE_KEY = 'feedback-msg';
 
 const refs = {
@@ -16,28 +15,7 @@ refs.form.addEventListener('submit', onFormSubmit);
 refs.textarea.addEventListener('input', throttle(onTextareaInput, 200));
 skrt.formInput.addEventListener('input', throttle(onTextareaInput, 200));
 
-// let a = refs.textarea.value.split('');
-// console.log(a);
-// let b = [];
-// a.forEach(i=>{
-//   if (i !== ' '){
-//     b.push(i)
-//   }
-
-
-// });
-
-// b.join()
-
-
-function onFormSubmit(evt) {
-  evt.preventDefault();
-  console.log('Отправляем форму');
-  refs.form.reset();
-  localStorage.removeItem('feedback-msg');
-
-}
-
+let dataValue;
 
 function onTextareaInput(evt) {
   const message = skrt.formText.value;
@@ -47,33 +25,43 @@ function onTextareaInput(evt) {
       email:mylo,
       mesaga:message
     }
+    
+
   )); 
+  dataValue = JSON.parse(localStorage.getItem(STORAGE_KEY));
 }
 
-const dataValue = JSON.parse(localStorage.getItem(STORAGE_KEY));
+
+
+
+function onFormSubmit(evt) {
+  evt.preventDefault();
+  console.log('Отправляем форму');
+  console.log(dataValue)
+  refs.form.reset();
+  localStorage.removeItem('feedback-msg');
+  // dataValue = null;
+}
+
+
 
 function populateTextarea() {
   const savedMessage = dataValue.mesaga;
   const savedMylo = dataValue.email;
 
-  if (savedMessage) {
+  // if (savedMessage) {
     skrt.formText.value = savedMessage;
-  }
+  // }
 
-  if (savedMylo) {
+  // if (savedMylo) {
     skrt.formInput.value = savedMylo;
+  // }
+  dataValue = JSON.parse(localStorage.getItem(STORAGE_KEY));
+}
+
+function go(){
+  if(dataValue){
+    populateTextarea();
   }
-
 }
-
-populateTextarea();
-
-let objDataOfDearCustomers = {
-  email:skrt.formInput.value,
-  message:skrt.formText.value
-}
-
-
-
-
-console.log(dataValue.email)
+go()
