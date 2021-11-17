@@ -12,4 +12,7 @@ const onPlay = function (data) {
 const saveSet = localStorage.getItem('videoplayer-current-time');
 const parsedTime = JSON.parse(saveSet);
 console.log(saveSet);
-player.setCurrentTime(parsedTime);
+
+if (parsedTime){
+    player.setCurrentTime(parsedTime);
+}
