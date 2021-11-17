@@ -25,39 +25,46 @@ function onTextareaInput(evt) {
       email:mylo,
       mesaga:message
     }
-    
-
   )); 
   dataValue = JSON.parse(localStorage.getItem(STORAGE_KEY));
 }
 
-
-
+dataValue = JSON.parse(localStorage.getItem(STORAGE_KEY));
 
 function onFormSubmit(evt) {
   evt.preventDefault();
-  console.log('Отправляем форму');
-  console.log(dataValue)
-  refs.form.reset();
-  localStorage.removeItem('feedback-msg');
+  if (skrt.formText.value)
+  {
+    console.log(dataValue)
+    refs.form.reset();
+    localStorage.removeItem('feedback-msg');
+    console.log('Отправляем форму');
+  } else if (skrt.formInput.value)
+  {
+    console.log(dataValue)
+    refs.form.reset();
+    localStorage.removeItem('feedback-msg');
+    console.log('Отправляем форму');
+  }
+
   // dataValue = null;
 }
-
-
 
 function populateTextarea() {
   const savedMessage = dataValue.mesaga;
   const savedMylo = dataValue.email;
 
-  // if (savedMessage) {
+  if (savedMessage) {
     skrt.formText.value = savedMessage;
-  // }
+  }
 
-  // if (savedMylo) {
+  if (savedMylo) {
     skrt.formInput.value = savedMylo;
-  // }
-  dataValue = JSON.parse(localStorage.getItem(STORAGE_KEY));
+  }
+  
 }
+
+
 
 function go(){
   if(dataValue){
